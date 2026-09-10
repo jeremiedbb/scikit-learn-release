@@ -339,11 +339,6 @@ jobs:
         )
       )
     runs-on: ubuntu-latest
-    # environment:
-    #   name: pypi
-    #   url: https://pypi.org/p/scikit-learn
-    # permissions:
-    #   id-token: write  # mandatory for trusted publishing
     needs: [build_wheels, build_sdist, testpypi-publish]
     environment:
       name: pypi
@@ -360,9 +355,8 @@ jobs:
       - name: View artifacts
         run: ls dist
 
-      # - name: Publish
-      #   uses: pypa/gh-action-pypi-publish@cef221092ed1bacb1cc03d23a2d87d1d172e277b # v1.14.0
-      #   with:
-      #     print-hash: true
-      #     attestations: true
-
+      - name: Publish
+        uses: pypa/gh-action-pypi-publish@cef221092ed1bacb1cc03d23a2d87d1d172e277b # v1.14.0
+        with:
+          print-hash: true
+          attestations: true
