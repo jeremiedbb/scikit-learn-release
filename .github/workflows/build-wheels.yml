@@ -12,12 +12,9 @@ on:
       ref:
         description: The scikit-learn branch, tag, SHA, or refs/pull/N/merge to build
         required: false
-        type: string
         default: main
-  # Manual "Run workflow" on this repo until a release candidate is green.
-  # Set `ref` to the sklearn release PR (refs/pull/N/merge); after that PR is
-  # merged, run once more with the maintenance branch (e.g. 1.9.X). Then
-  # publish.yml uploads those artifacts.
+        type: string
+  # Manual "Run workflow" on this repo, usually after the sklearn release PR is merged.
   workflow_dispatch:
     inputs:
       ref:
