@@ -27,25 +27,31 @@ jobs:
       actions: read  # list runs and download artifacts
       id-token: write  # mandatory for trusted publishing
     steps:
-      # find the last successful build-wheels.yml run for which the sdist name matches
-      # the requested version.
+      # find the last successful build-wheels.yml runs, manually dispatched from `main`,
+      # for which the sdist name matches the requested version.
       - name: Find build run
         id: find
         env:
           GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
           SKLEARN_VERSION: ${{ inputs.version }}
         run: |
           set -euo pipefail
-          sdist="scikit-learn-${SKLEARN_VERSION}.tar.gz"
-          for id in $(gh run list --workflow build-wheels.yml --status success --limit 20 --json databaseId --jq '.[].databaseId'); do
+          sdist="scikit_learn-${SKLEARN_VERSION}.tar.gz"
+          run_ids=$(
+            gh run list --workflow build-wheels.yml --status success --limit 10 \
+              --event workflow_dispatch --branch main \
+              --json databaseId --jq '.[].databaseId'
+          )
+          for id in $run_ids; do
             rm -rf sdist-check
             if gh run download "$id" -n cibw-sdist -D sdist-check && find sdist-check -name "$sdist" | grep -q .; then
-              echo "Using https://github.com/${{ github.repository }}/actions/runs/${id}"
+              echo "Using https://github.com/${GH_REPO}/actions/runs/${id}"
               echo "run_id=$id" >> "$GITHUB_OUTPUT"
               exit 0
             fi
           done
-          echo "No successful build-wheels.yml run with $sdist in the last 20 runs."
+          echo "No successful build-wheels.yml run with $sdist in the last 10 runs."
           exit 1
 
       - name: Download sdist and wheels

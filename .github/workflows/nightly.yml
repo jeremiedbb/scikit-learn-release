@@ -5,13 +5,14 @@ on:
     # 01:01 UTC every day
     - cron: "1 1 * * *"
 
+permissions:
+  contents: read
+
 jobs:
   build:
     name: Build sdist and wheels
     if: github.repository == 'scikit-learn/scikit-learn-release'
     uses: ./.github/workflows/build-wheels.yml
-    permissions:
-      contents: read
     with:
       ref: main
 
@@ -40,9 +41,10 @@ jobs:
       - name: Upload to anaconda.org
         shell: bash -el {0}
         env:
-          TOKEN: ${{ secrets.SCIKIT_LEARN_NIGHTLY_UPLOAD_TOKEN }}
+          # anaconda-client uses this env var as the default token.
+          ANACONDA_API_TOKEN: ${{ secrets.SCIKIT_LEARN_NIGHTLY_UPLOAD_TOKEN }}
         run: |
-          anaconda -q -t ${TOKEN} upload --force -u scientific-python-nightly-wheels ./dist/*.whl
+          anaconda -q upload --force -u scientific-python-nightly-wheels ./dist/*.whl
 
   # Open/update a tracking issue on scikit-learn when this nightly fails.
   # Uncomment when:
