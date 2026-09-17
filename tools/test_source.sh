@@ -13,4 +13,9 @@ python -m pip install -r requirements/test_requirements.txt
 mkdir tmp_for_test
 cd tmp_for_test
 
-pytest --pyargs sklearn
+if pip show -qq pytest-xdist; then
+    XDIST_WORKERS=$(python -c "import joblib; print(joblib.cpu_count(only_physical_cores=True))")
+    pytest --pyargs sklearn -n $XDIST_WORKERS
+else
+    pytest --pyargs sklearn
+fi
