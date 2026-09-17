@@ -45,9 +45,6 @@ jobs:
         include:
           # Window 64 bit
           - os: windows-latest
-            python: 311
-            platform_id: win_amd64
-          - os: windows-latest
             python: 312
             platform_id: win_amd64
           - os: windows-latest
@@ -67,9 +64,6 @@ jobs:
             platform_id: win_amd64
 
           # Windows on ARM64 (WoA)
-          - os: windows-11-arm
-            python: 311
-            platform_id: win_arm64
           - os: windows-11-arm
             python: 312
             platform_id: win_arm64
@@ -91,9 +85,6 @@ jobs:
 
           # Linux
           - os: ubuntu-latest
-            python: 311
-            platform_id: manylinux_x86_64
-          - os: ubuntu-latest
             python: 312
             platform_id: manylinux_x86_64
           - os: ubuntu-latest
@@ -113,9 +104,6 @@ jobs:
             platform_id: manylinux_x86_64
 
           # Linux arm
-          - os: ubuntu-24.04-arm
-            python: 311
-            platform_id: manylinux_aarch64
           - os: ubuntu-24.04-arm
             python: 312
             platform_id: manylinux_aarch64
@@ -137,9 +125,6 @@ jobs:
 
           # MacOS x86_64
           - os: macos-15-intel
-            python: 311
-            platform_id: macosx_x86_64
-          - os: macos-15-intel
             python: 312
             platform_id: macosx_x86_64
           - os: macos-15-intel
@@ -159,9 +144,6 @@ jobs:
             platform_id: macosx_x86_64
 
           # MacOS arm64
-          - os: macos-14
-            python: 311
-            platform_id: macosx_arm64
           - os: macos-14
             python: 312
             platform_id: macosx_arm64
