@@ -18,7 +18,6 @@ jobs:
 
   nightly_upload:
     name: Nightly upload
-    if: github.repository == 'scikit-learn/scikit-learn-release'
     runs-on: ubuntu-latest
     environment: upload_anaconda
     needs: [build]
@@ -55,7 +54,7 @@ jobs:
   #
   # update-tracker:
   #   needs: [build]
-  #   if: ${{ always() }}
+  #   if: github.repository == 'scikit-learn/scikit-learn-release'
   #   uses: scikit-learn/scikit-learn/.github/workflows/update_tracking_issue.yml@main
   #   with:
   #     job_status: ${{ needs.build.result }}
