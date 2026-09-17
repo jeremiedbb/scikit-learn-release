@@ -1,3 +1,5 @@
+[![Publish sdist and wheels](https://github.com/scikit-learn/scikit-learn-release/actions/workflows/wheels.yml/badge.svg?branch=main&event=schedule)](https://github.com/scikit-learn/scikit-learn-release/actions/workflows/wheels.yml)
+
 # Scikit-learn wheels and release tooling
 
 This repository contains what is needed to build release artifacts (wheels and
