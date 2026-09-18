@@ -256,6 +256,8 @@ jobs:
 
       - name: Test source distribution
         run: bash tools/test_source.sh
+        env:
+          SKLEARN_SKIP_NETWORK_TESTS: 1
 
       # publish.yml checks this against the release tag before uploading to PyPI.
       - name: Record scikit-learn commit
